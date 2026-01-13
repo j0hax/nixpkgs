@@ -94,8 +94,8 @@ in
     boot.extraModulePackages = [ tuxedo-drivers ];
     services.udev.packages = [
       tuxedo-drivers
-      lib.mkIf
-      (lib.any (v: v != null) cfg.settings)
+    ]
+    ++ lib.optionals (lib.any (v: v != null) (lib.attrValues cfg.settings)) [
       (pkgs.writeTextDir "etc/udev/rules.d/90-tuxedo.rules" (
         lib.concatLines (
           [ "# Custom rules for TUXEDO laptops" ]
